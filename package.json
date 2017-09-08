@@ -1,8 +1,8 @@
 {
-  "name": "gestor_plantillas",
-  "description": "gestor de plantillas de documentos",
+  "name": "splayer",
+  "description": "Reproductor multimedia Splayer",
   "version": "1.0.0",
-  "author": "paulacurso <paulacursocic@gmail.com>",
+  "author": "rcotera <rcotera@email>",
   "private": true,
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server --open --hot",
