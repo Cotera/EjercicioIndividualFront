@@ -1,30 +1,82 @@
 <template>
 	<div id="detail" class="row">
-		
+	<div class="col-md-12">
+
 		<form onsubmit="return false" v-if="active">
-			<h3 v-if="archivo.Id">Actualización de Archivo</h3>
-			<h3 v-else>Nueva Archivo</h3>
-			<input type="hidden" id="id" v-model:value="archivo.Id"/>
-			<p><label for="tipo">Tipo: </label><input type="text" required id="sala" v-model:value="archivo.Tipo"/></p>
-			<p><label for="descripcion">Descripción: </label><textarea required id="butaca" v-model:value="archivo.Descripcion" rows="5" cols="20"></textarea></p>
-			<p>
-				<label for="tipoUsuario">Tipo de usuario: </label>
-				<select v-model:value="archivo.TipoUsuario" id="tipoUsuario" required>
-				  <option v-for="option in tiposUsuarios" v-bind:value="option.value">
-				    {{ option.text }}
-				  </option>
-				</select>
-			</p>
-			<p><label for="editable" class="checkbox-inline"><input type="checkbox" required id="editable" class="checkbox checkbox-primary" v-model:value="archivo.Editable"/> Editable</label></p>
-			<p v-if="archivo.FechaCreacion"><label for="fechaCreacion">Fecha de creacion: </label><input type="date" required id="fila" v-model:value="this.archivo.FechaCreacion.toString().split('T')[0]" readonly/></p>
-			<p>
-				<input type ="button" name="aceptar" value="Aceptar" class="btn btn-success" v-on:click="aceptar"/>
-				<input type ="button" name="cancelar" value="Cancelar" class="btn btn-secondary" v-on:click="cerrarDetalle"/>
-				<input v-if="archivo.Id" type ="button" name="eliminar" class="btn btn-danger"value="Eliminar" v-on:click="eliminar"/>
+			<div class="row">
+				<div class="col-md-12">
+					<h3 v-if="archivo.Id">Actualización de Archivo</h3>
+					<h3 v-else>Nuevo Archivo</h3>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-4">
+					<input type="hidden" id="id" v-model:value="archivo.Id"/>
+					<div class="input-group input-group-lg"">
+						<span class="input-group-addon">T&iacute;tulo:</span>
+						<input type="text" class="form-control" id="titulo" required
+							v-model:value="archivo.Titulo"/>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-4">
+				<div class="input-group input-group-lg">
+					<span class="input-group-addon">Tipo de archivo:</span>
+					<select class="form-control" id="tipo" required
+						v-model:value="archivo.Tipo">
+						<option v-for="option in tiposArchivo" v-bind:value="option.value">
+						{{ option.text }}
+						</option>
+					</select>
+				</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-4">
+				<div class="input-group input-group-lg"">
+					<span class="input-group-addon">Formato:</span>
+					<input type="text" class="form-control" id="formato" required
+						v-model:value="archivo.Formato">
+				</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-md-4">
+				<div class="input-group input-group-lg"">
+					<span class="input-group-addon">Tama&ntilde;o:</span>
+					<input type="number" class="form-control" id="tamanio"
+						v-model:value="archivo.TamanioMb">
+					<span class="input-group-addon">MB</span>
+				</div>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="col-md-4">
+				<div class="input-group input-group-lg"">
+					<span class="input-group-addon">Duraci&oacute;n:</span>
+					<input type="time" class="form-control" id="duracion"
+						v-model:value="archivo.Duracion">
+					<span class="input-group-addon">min</span>
+				</div>
+				</div>
+			</div>
+			
+
+			<input type ="button" name= "aceptar" value="Aceptar" class="btn btn-success"
+				v-on:click="aceptar"/>
+			<input type ="button" name="cancelar" value="Cancelar" class="btn btn-secondary"
+				v-on:click="cerrarDetalle"/>
+			<input type ="button" name="eliminar" value="Eliminar" class="btn btn-danger"
+				v-if="archivo.Id" v-on:click="eliminar"/>
 				
-			</p>
 		</form>
-		
+	</div>
 	</div>
 </template>
 
@@ -37,11 +89,11 @@ export default {
 		return {
 			archivo:this.archivo,
 			active:true,
-			tiposUsuarios:[
-				{text:'Administrador',value:'Administrador'},
-				{text:'Editor',value:'Editor'},
-				{text:'Gestor',value:'Gestor'},
-				{text:'Usuario',value:'Usuario'}
+			tiposArchivo:[
+				{text:'Video',value:'video'},
+				{text:'Sonido',value:'sonido'},
+				{text:'Imagen',value:'imagen'},
+				{text:'Otros',value:'otros<>'}
 			]
 		}
 		
@@ -52,25 +104,27 @@ export default {
 		}else{
 			this.archivo = {
 				Id:null,
+				Titulo:"",
 				Tipo:"",
-				Descripcion:"",
-				FechaCreacion:"",
-				TipoUsuario:"",
-				Editable:false
+				Formato:"",
+				TamanioMb:"",
+				Duracion:""
 			}
 		}
 	},
 	methods: {
 		eliminar: function(){
+			console.log("Entro en DELETE")
+		
 			axios.delete(SERVER+'/api/Archivos/'+this.archivo.Id)
 			 .then(result => {
 			 	this.archivo = result.data
 			 	EventBus.$emit('cambiosArchivo',this.archivo)
-			 	alert('Archivo eliminada con exito')
+			 	alert('Archivo eliminado con exito')
 			 	this.cerrarDetalle()
 			})
 			.catch(function(){
-				alert("Error al eliminar la archivo")
+				alert("Error al eliminar el archivo")
 			})
 			
 		},
@@ -78,7 +132,10 @@ export default {
 			if(this.archivo.Id==null || this.archivo.Id==0){
 				this.archivo.Id = 0
 				this.archivo.FechaCreacion= new Date()
-				axios.post(SERVER + '/api/Archivos',this.archivo)
+				
+				console.log("Entro en POST "+ SERVER)
+				
+				axios.post(SERVER + '/api/Archivos',this.archivo.Id)
 				.then(
 					(archivo)=>{
 					this.archivo.Id = archivo.data.Id
@@ -87,9 +144,10 @@ export default {
 
 				})
 				.catch(function(){
-					alert("Error al crear la archivo")
+					alert("Error al crear el archivo")
 				})
 			}else{
+				console.log("Entro en PUT")
 				axios.put(SERVER + '/api/Archivos/'+this.archivo.Id,this.archivo)
 				.then(
 					()=>{
@@ -97,7 +155,7 @@ export default {
 						this.cerrarDetalle()
 				})
 				.catch(function(){
-					alert("Error al actualizar la archivo")
+					alert("Error al actualizar el archivo")
 				})
 			}
 		},

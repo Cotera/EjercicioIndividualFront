@@ -1,21 +1,20 @@
 <template>
-
-<div id="app">
-	
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+<div id="app" class="container">
+	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 <!--			<div class="navbar-header">-->
 <!--				<a class="navbar-brand" href="#">Splayer</a>-->
 <!--			</div>-->
 			<ul class="nav navbar-nav">
-				<li class="active">
-					<a href="#" id="archivo" v-on:click="showMaster" v-bind:class="{ 'btn-success': achivoView }">
+				<li>
+					<a href="#" id="archivo" class="glyphicon glyphicon-file" v-on:click="showMaster"
+						v-bind:class="{ 'btn-success': archivoView }">
 					Gesti&oacute;n de Archivos
 					</a>
 				</li>
-			
+	
 				<li>
-					<a href="#">
+					<a href="#" id="lista" class="glyphicon glyphicon-list">
 		<!--				id="archivo" v-on:click="showMaster" v-bind:class="{ 'btn-success':  }">-->
 					Gesti&oacute;n de Listas
 					</a>
@@ -23,6 +22,7 @@
 			</ul>
 		</div>
 	</nav>
+
 	<div id="master" class="row">
 	</div>
 </div>

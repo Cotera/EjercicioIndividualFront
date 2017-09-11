@@ -7,19 +7,23 @@
 	
 	<div class="row">
 		<div class="col-md-12">
-		<input type="button" name="crear" value="Subir Archivo" class="btn btn-info" v-on:click = "showDetail"/>
+		<input type="button" name="crear" value="Subir Archivo" class="btn btn-info"
+			v-on:click = "showDetail"/>
 <!--		<p>Seleccione una plantilla para editarla o cree una nueva.</p>-->
 		</div>
 	</div>
 
 	<div class="row">
-		<ul class="list-group">
-			<a href="#" class="list-group-item row col-md-4" v-for= "archivo in archivos"
-				v-on:click= "showDetail" id="archivo.Id" v-bind:id = "archivo.Id">
-				{{plantilla.Tipo}}
-			</a>
-		</ul>
+		<div class="col-md-12">
+			<ul class="list-group">
+				<a href="#" class="list-group-item row col-md-4" v-for= "archivo in archivos"
+					v-on:click= "showDetail" id="archivo.Id" v-bind:id = "archivo.Id">
+					{{plantilla.Tipo}}
+				</a>
+			</ul>
+		</div>
 	</div>
+	
 	<div id="detail" class="row">
 	</div>
 </div>
