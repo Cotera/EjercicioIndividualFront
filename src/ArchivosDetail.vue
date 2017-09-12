@@ -90,10 +90,10 @@ export default {
 			archivo:this.archivo,
 			active:true,
 			tiposArchivo:[
-				{text:'Video',value:'video'},
-				{text:'Sonido',value:'sonido'},
-				{text:'Imagen',value:'imagen'},
-				{text:'Otros',value:'otros<>'}
+				{text:'Video', value:'video'},
+				{text:'Sonido', value:'sonido'},
+				{text:'Imagen', value:'imagen'},
+				{text:'Otros', value:'otros<>'}
 			]
 		}
 		
@@ -103,12 +103,12 @@ export default {
 			this.archivo = this.$parent.archivo
 		}else{
 			this.archivo = {
-				Id:null,
-				Titulo:"",
-				Tipo:"",
-				Formato:"",
-				TamanioMb:"",
-				Duracion:""
+				Id: null,
+				Titulo: "",
+				Tipo: "",
+				Formato: "",
+				TamanioMb: "",
+				Duracion: ""
 			}
 		}
 	},
@@ -129,19 +129,18 @@ export default {
 			
 		},
 		aceptar: function(){
-			if(this.archivo.Id==null || this.archivo.Id==0){
+			if(this.archivo.Id == null || this.archivo.Id == 0){
 				this.archivo.Id = 0
 				this.archivo.FechaCreacion= new Date()
 				
-				console.log("Entro en POST "+ SERVER)
+				console.log("Entro en POST "+ archivo)
 				
-				axios.post(SERVER + '/api/Archivos',this.archivo.Id)
+				axios.post(SERVER + '/api/Archivos',this.archivo)
 				.then(
 					(archivo)=>{
 					this.archivo.Id = archivo.data.Id
 					EventBus.$emit('cambiosArchivo',this.archivo)
 					this.cerrarDetalle()
-
 				})
 				.catch(function(){
 					alert("Error al crear el archivo")

@@ -15,12 +15,41 @@
 
 	<div class="row">
 		<div class="col-md-12">
+		<div class="table-responsive">
+			
+			<table class="table table-striped table-hover" v-if="archivos != null">
+			<thead>
+				<tr>
+				<th>Titulo</th>
+				<th>Tipo</th>
+				<th>Formato</th>
+				<th>Tama&ntilde;o (MB)</th>
+				<th>Duracion (h)</th>
+				<th></th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr v-for="archivo in archivos">
+					<td>{{ archivo.Titulo }}</td>
+					<td>{{ archivo.Tipo }}</td>
+					<td>{{ archivo.Formato }}</td>
+					<td>{{ archivo.TamanioMb }}</td>
+					<td>{{ archivo.Duracion}}</td>
+					<td>
+						<button class="btn btn-warning glyphicon glyphicon-edit"></button>
+					</td>
+				</tr>
+			</tbody>
+			</table>
+			
 			<ul class="list-group">
 				<a href="#" class="list-group-item row col-md-4" v-for= "archivo in archivos"
 					v-on:click= "showDetail" id="archivo.Id" v-bind:id = "archivo.Id">
-					{{plantilla.Tipo}}
+					{{archivo.Titulo}}
 				</a>
 			</ul>
+		</div>
 		</div>
 	</div>
 	
@@ -48,7 +77,6 @@ export default{
 		EventBus.$on('cambiosArchivo',
 			this.getAll
 		)
-		
 	},
 	methods: {
 		getAll: function(){
@@ -58,20 +86,20 @@ export default{
 			})
 		},
 		showDetail: function(event){
-			let plantilla = this.devuelveArchivo(event.target.id)
+			let archivo = this.devuelveArchivo(event.target.id)
 			new Vue({
 				el: '#detail',
 				data:{
-					plantilla:plantilla
+					archivo:archivo
 				},
 				render: h => h(ArchivosDetail)
 			})
 		},
 		devuelveArchivo: function(id){
 			var resultado
-			this.archivos.forEach(function(plantilla){
-				if(plantilla.Id == id){
-					resultado = plantilla
+			this.archivos.forEach(function(archivo){
+				if(archivo.Id == id){
+					resultado = archivo
 				}		
 
 			})
