@@ -28,6 +28,7 @@
 <script>
 import Vue from 'vue'
 import ArchivosMaster from './ArchivosMaster.vue'
+import {EventBus} from './EventBus.js'
 
 export default {
   name: 'app',

@@ -6,30 +6,49 @@
 	</div>
 	
 	<div class="row">
-		<div class="col-md-6 col-md-pull-3" v-if="showReadError">
+		<div class="col-md-6 col-md-push-3" v-if="showReadError">
 			<div class="alert alert-danger alert-dismissable">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				<strong>Error!</strong> No se ha podido leer de la base de datos
 			</div>
 		</div>
+
 		<div class="col-md-6 col-md-push-3" v-if="showDelSuccess">
 			<div class="alert alert-success alert-dismissable">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				<strong>Correcto!</strong> Se ha eliminado el elemento
 			</div>
 		</div>
-		<div class="col-md-6" v-if="showDelError">
+		<div class="col-md-6 col-md-push-3" v-if="showDelError">
 			<div class="alert alert-danger alert-dismissable">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				<strong>Error!</strong> No se ha podido eliminar el elemento
 			</div>
 		</div>
-		<div class="col-md-6" v-if="showUpdSuccess">
+
+		<div class="col-md-6 col-md-push-3" v-if="showUpdSuccess">
 			<div class="alert alert-success alert-dismissable">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				<strong>Correcto!</strong> Se ha actualizado el elemento
 			</div>
 		</div>
-		<div class="col-md-6" v-if="showUpdError">
+		<div class="col-md-6 col-md-push-3" v-if="showUpdError">
 			<div class="alert alert-danger alert-dismissable">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 				<strong>Error!</strong> No se ha podido actualizar el elemento
+			</div>
+		</div>
+
+		<div class="col-md-6 col-md-push-3" v-if="showCreSuccess">
+			<div class="alert alert-success alert-dismissable">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>Correcto!</strong> Se ha guardado el elemento
+			</div>
+		</div>
+		<div class="col-md-6 col-md-push-3" v-if="showCreError">
+			<div class="alert alert-danger alert-dismissable">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>Error!</strong> No se ha podido guardar el elemento
 			</div>
 		</div>
 	</div>
@@ -76,10 +95,6 @@
 				</tr>
 			</tbody>
 			</table>
-			
-<!--				<a href="#" class="list-group-item row col-md-4" v-for= "archivo in archivos"-->
-<!--					v-on:click= "showDetail" id="archivo.Id" v-bind:id = "archivo.Id">-->
-<!--					{{archivo.Titulo}}-->
 		</div>
 		</div>
 	</div>
@@ -102,6 +117,8 @@ export default{
 			showDelError: false,
 			showUpdSuccess: false,
 			showUpdError: false,
+			showCreSuccess: false,
+			showCreError: false,
 			archivos: []
 		}
 	},
@@ -110,6 +127,55 @@ export default{
 		EventBus.$on('cambiosArchivo',
 			this.getAll
 		)
+		EventBus.$on('alertUpdSuccess', showUpdSuccess => {
+			this.showReadError= false
+
+			this.showDelSuccess= false
+			this.showDelError= false
+
+			this.showUpdSuccess= true
+			this.showUpdError= false
+
+			this.showCreSuccess= false
+			this.showCreError= false
+		})
+		EventBus.$on('alertUpdError', showUpdError => {
+			this.showReadError= false
+
+			this.showDelSuccess= false
+			this.showDelError= false
+
+			this.showUpdSuccess= false
+			this.showUpdError= true
+
+			this.showCreSuccess= false
+			this.showCreError= false
+		})
+		EventBus.$on('alertCreateSuccess', (success) => {
+			this.showReadError= false
+
+			this.showDelSuccess= false
+			this.showDelError= false
+
+			this.showUpdSuccess= false
+			this.showUpdError= false
+
+			this.showCreSuccess= true
+			this.showCreError= false
+		})
+		EventBus.$on('alertCreateError', (success) => {
+
+			this.showReadError= false
+
+			this.showDelSuccess= false
+			this.showDelError= false
+
+			this.showUpdSuccess= false
+			this.showUpdError= false
+
+			this.showCreSuccess= false
+			this.showCreError= true
+		})
 	},
 	methods: {
 		getAll: function(){

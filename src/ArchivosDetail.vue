@@ -79,6 +79,7 @@
 <script>
 import {EventBus} from './EventBus.js'
 import axios from 'axios'
+
 export default {
 	name: 'detalle',
 	data(){
@@ -89,13 +90,11 @@ export default {
 				{text:'Video', value:'video'},
 				{text:'Sonido', value:'sonido'},
 				{text:'Imagen', value:'imagen'},
-				{text:'Otros', value:'otros<>'}
+				{text:'Otros', value:'otros'}
 			]
 		}
-		
 	},
 	created() {
-		this.showUpdSuccess = this.$parent.showUpdSuccess
 		if(this.$parent.archivo != undefined){
 			this.archivo = this.$parent.archivo
 			
@@ -112,7 +111,6 @@ export default {
 	},
 	methods: {
 		aceptar: function(){
-			var _this = this;
 			if(this.archivo.Id == null || this.archivo.Id == 0){
 				
 				axios.post(SERVER + '/api/Archivo',this.archivo)
@@ -120,20 +118,21 @@ export default {
 					(archivo)=>{
 					this.archivo.Id = archivo.data.Id
 					this.cerrarDetalle()
+					EventBus.$emit('alertCreateSuccess')
 				})
 				.catch(function(){
 					alert("Error al crear el archivo")
+					EventBus.$emit('alertCreateError')
 				})
 			}else{
 				axios.put(SERVER + '/api/Archivo/'+this.archivo.Id,this.archivo)
 				.then( ()=>{
-						this.cerrarDetalle()
-						//console.log("showUpdSuccess "+_this.$parent);
-						this.showUpdSuccess = true
+					this.cerrarDetalle()
+					EventBus.$emit('alertUpdSuccess')
 				})
 				.catch( () => {
 					alert("Error al actualizar el archivo")
-					this.showUpdError = true
+					EventBus.$emit('alertUpdError')
 				})
 			}
 		},
