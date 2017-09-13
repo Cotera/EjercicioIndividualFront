@@ -3,19 +3,17 @@
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
 			<ul class="nav navbar-nav">
-				<li>
-					<a href="#" id="archivo" class="glyphicon glyphicon-file" v-on:click="showMaster"
-						v-bind:class="{ 'btn-success': archivoView }">
+				<li v-bind:class="{ 'active': archivoView }">
+					<a href="#" id="archivo" class="glyphicon glyphicon-file" v-on:click="showMaster">
 					Gesti&oacute;n de Archivos
 					</a>
 				</li>
 	
-<!--				<li>-->
-<!--					<a href="#" id="lista" class="glyphicon glyphicon-list">-->
-		<!--				id="archivo" v-on:click="showMaster" v-bind:class="{ 'btn-success':  }">-->
-<!--					Gesti&oacute;n de Listas-->
-<!--					</a>-->
-<!--				</li>-->
+				<li v-bind:class="{ 'active': playlistView }">
+					<a href="#" id="playlist" class="glyphicon glyphicon-list" v-on:click="showMaster">
+						Gesti&oacute;n de listas
+					</a>
+				</li>
 			</ul>
 		</div>
 	</nav>
@@ -28,6 +26,7 @@
 <script>
 import Vue from 'vue'
 import ArchivosMaster from './ArchivosMaster.vue'
+import PlaylistMaster from './PlaylistMaster.vue'
 import {EventBus} from './EventBus.js'
 
 export default {
@@ -35,7 +34,7 @@ export default {
   data(){
     return {
 		archivoView: false,
-//      playlistView: false
+        playlistView: false
     }
   },
   methods: {
@@ -48,16 +47,16 @@ export default {
               el: '#master',
               render: h => h(ArchivosMaster)
             })
-//            this.playlistView=false
+            this.playlistView=false
           break
-        /*case "tipoDoc":
+		case "playlist":
             this.playlistView=true
             new Vue({
               el: '#master',
-              render: h => h(PlayListMaster)
+              render: h => h(PlaylistMaster)
             })
             this.archivoView = false
-          break //*/
+          break
       }
     }
   }

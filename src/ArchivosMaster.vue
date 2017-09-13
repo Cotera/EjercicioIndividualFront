@@ -16,39 +16,39 @@
 		<div class="col-md-6 col-md-push-3" v-if="showDelSuccess">
 			<div class="alert alert-success alert-dismissable">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Correcto!</strong> Se ha eliminado el elemento
+				<strong>Correcto!</strong> Se ha eliminado el archivo
 			</div>
 		</div>
 		<div class="col-md-6 col-md-push-3" v-if="showDelError">
 			<div class="alert alert-danger alert-dismissable">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Error!</strong> No se ha podido eliminar el elemento
+				<strong>Error!</strong> No se ha podido eliminar el archivo
 			</div>
 		</div>
 
 		<div class="col-md-6 col-md-push-3" v-if="showUpdSuccess">
 			<div class="alert alert-success alert-dismissable">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Correcto!</strong> Se ha actualizado el elemento
+				<strong>Correcto!</strong> Se ha actualizado el archivo
 			</div>
 		</div>
 		<div class="col-md-6 col-md-push-3" v-if="showUpdError">
 			<div class="alert alert-danger alert-dismissable">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Error!</strong> No se ha podido actualizar el elemento
+				<strong>Error!</strong> No se ha podido actualizar el archivo
 			</div>
 		</div>
 
 		<div class="col-md-6 col-md-push-3" v-if="showCreSuccess">
 			<div class="alert alert-success alert-dismissable">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Correcto!</strong> Se ha guardado el elemento
+				<strong>Correcto!</strong> Se ha guardado el archivo
 			</div>
 		</div>
 		<div class="col-md-6 col-md-push-3" v-if="showCreError">
 			<div class="alert alert-danger alert-dismissable">
 				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-				<strong>Error!</strong> No se ha podido guardar el elemento
+				<strong>Error!</strong> No se ha podido guardar el archivo
 			</div>
 		</div>
 	</div>
