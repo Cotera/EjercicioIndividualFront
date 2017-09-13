@@ -2,9 +2,6 @@
 <div id="app" class="container">
 	<nav class="navbar navbar-default">
 		<div class="container-fluid">
-<!--			<div class="navbar-header">-->
-<!--				<a class="navbar-brand" href="#">Splayer</a>-->
-<!--			</div>-->
 			<ul class="nav navbar-nav">
 				<li>
 					<a href="#" id="archivo" class="glyphicon glyphicon-file" v-on:click="showMaster"
@@ -13,12 +10,12 @@
 					</a>
 				</li>
 	
-				<li>
-					<a href="#" id="lista" class="glyphicon glyphicon-list">
+<!--				<li>-->
+<!--					<a href="#" id="lista" class="glyphicon glyphicon-list">-->
 		<!--				id="archivo" v-on:click="showMaster" v-bind:class="{ 'btn-success':  }">-->
-					Gesti&oacute;n de Listas
-					</a>
-				</li>
+<!--					Gesti&oacute;n de Listas-->
+<!--					</a>-->
+<!--				</li>-->
 			</ul>
 		</div>
 	</nav>
@@ -36,10 +33,9 @@ export default {
   name: 'app',
   data(){
     return {
-      archivoView: false,
-//      tipoDocSelected: false
+		archivoView: false,
+//      playlistView: false
     }
-    
   },
   methods: {
     showMaster:function(event){
@@ -51,13 +47,13 @@ export default {
               el: '#master',
               render: h => h(ArchivosMaster)
             })
-//            this.tipoDocSelected=false
+//            this.playlistView=false
           break
         /*case "tipoDoc":
-            this.tipoDocSelected=true
+            this.playlistView=true
             new Vue({
               el: '#master',
-              render: h => h(TipoDocMaster)
+              render: h => h(PlayListMaster)
             })
             this.archivoView = false
           break //*/

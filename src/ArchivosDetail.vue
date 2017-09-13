@@ -66,15 +66,11 @@
 				</div>
 				</div>
 			</div>
-			
 
 			<input type ="button" name= "aceptar" value="Aceptar" class="btn btn-success"
 				v-on:click="aceptar"/>
 			<input type ="button" name="cancelar" value="Cancelar" class="btn btn-secondary"
 				v-on:click="cerrarDetalle"/>
-			<input type ="button" name="eliminar" value="Eliminar" class="btn btn-danger"
-				v-if="archivo.Id" v-on:click="eliminar"/>
-				
 		</form>
 	</div>
 	</div>
@@ -87,9 +83,9 @@ export default {
 	name: 'detalle',
 	data(){
 		return {
-			archivo:this.archivo,
-			active:true,
-			tiposArchivo:[
+			archivo: this.archivo,
+			active: true,
+			tiposArchivo: [
 				{text:'Video', value:'video'},
 				{text:'Sonido', value:'sonido'},
 				{text:'Imagen', value:'imagen'},
@@ -99,8 +95,10 @@ export default {
 		
 	},
 	created() {
+		this.showUpdSuccess = this.$parent.showUpdSuccess
 		if(this.$parent.archivo != undefined){
 			this.archivo = this.$parent.archivo
+			
 		}else{
 			this.archivo = {
 				Id: null,
@@ -113,53 +111,35 @@ export default {
 		}
 	},
 	methods: {
-		eliminar: function(){
-			console.log("Entro en DELETE")
-		
-			axios.delete(SERVER+'/api/Archivos/'+this.archivo.Id)
-			 .then(result => {
-			 	this.archivo = result.data
-			 	EventBus.$emit('cambiosArchivo',this.archivo)
-			 	alert('Archivo eliminado con exito')
-			 	this.cerrarDetalle()
-			})
-			.catch(function(){
-				alert("Error al eliminar el archivo")
-			})
-			
-		},
 		aceptar: function(){
+			var _this = this;
 			if(this.archivo.Id == null || this.archivo.Id == 0){
-				this.archivo.Id = 0
-				this.archivo.FechaCreacion= new Date()
 				
-				console.log("Entro en POST "+ archivo)
-				
-				axios.post(SERVER + '/api/Archivos',this.archivo)
+				axios.post(SERVER + '/api/Archivo',this.archivo)
 				.then(
 					(archivo)=>{
 					this.archivo.Id = archivo.data.Id
-					EventBus.$emit('cambiosArchivo',this.archivo)
 					this.cerrarDetalle()
 				})
 				.catch(function(){
 					alert("Error al crear el archivo")
 				})
 			}else{
-				console.log("Entro en PUT")
-				axios.put(SERVER + '/api/Archivos/'+this.archivo.Id,this.archivo)
-				.then(
-					()=>{
-						EventBus.$emit('cambiosArchivo',this.archivo)
+				axios.put(SERVER + '/api/Archivo/'+this.archivo.Id,this.archivo)
+				.then( ()=>{
 						this.cerrarDetalle()
+						//console.log("showUpdSuccess "+_this.$parent);
+						this.showUpdSuccess = true
 				})
-				.catch(function(){
+				.catch( () => {
 					alert("Error al actualizar el archivo")
+					this.showUpdError = true
 				})
 			}
 		},
-		cerrarDetalle:function(){
+		cerrarDetalle: function(){
 			this.active = false
+			EventBus.$emit('cambiosArchivo',this.archivo)
 		}
 	}
 }
