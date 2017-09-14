@@ -108,6 +108,7 @@ import axios from 'axios'
 import Vue from 'vue'
 import ArchivosDetail from './ArchivosDetail.vue'
 import {EventBus} from './EventBus.js'
+
 export default{
 	name: 'master',
 	data () {

@@ -55,7 +55,7 @@
 
 			<div class="row">
 				<div class="col-md-12">
-					<input type="button" name="crear" value="Subir Archivo" class="btn btn-info"
+					<input type="button" name="crear" value="Nueva Playlist" class="btn btn-info"
 						   v-on:click = "showDetail"/>
 				</div>
 			</div>
@@ -70,22 +70,20 @@
 						<table class="table table-bordered table-striped table-hover" v-if="playlists != null">
 							<thead>
 							<tr>
-								<th>Titulo</th>
-								<th>Tipo</th>
-								<th>Formato</th>
-								<th>Tama&ntilde;o (MB)</th>
+								<th>Nombre</th>
+								<th>Pistas</th>
 								<th>Duracion (h)</th>
+								<th>Publica</th>
 								<th></th>
 							</tr>
 							</thead>
 
 							<tbody>
 							<tr v-for="playlist in playlists">
-								<td>{{ playlist.Titulo }}</td>
-								<td>{{ playlist.Tipo }}</td>
-								<td>{{ playlist.Formato }}</td>
-								<td>{{ playlist.TamanioMb }}</td>
-								<td>{{ playlist.Duracion}}</td>
+								<td>{{ playlist.Nombre }}</td>
+								<td>{{ playlist.NumElementos }}</td>
+								<td>{{ playlist.DuracionTotal }}</td>
+								<td>{{ playlist.EsPublica }}</td>
 								<td>
 									<button class="btn btn-warning glyphicon glyphicon-pencil"
 											v-on:click="showDetail" v-bind:id="playlist.Id"> </button>
@@ -199,7 +197,7 @@
 				})
 			},
 			eliminar: function(event){
-				axios.delete(SERVER+'/api/PlayList/'+event.target.id) // TODO llamar al rest
+				axios.delete(SERVER+'/api/PlayList/'+event.target.id)
 					.then(result => {
 						this.playlist = result.data
 						EventBus.$emit('cambiosPlaylist',event.target.id )

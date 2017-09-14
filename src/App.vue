@@ -9,11 +9,11 @@
 					</a>
 				</li>
 	
-				<li v-bind:class="{ 'active': playlistView }">
-					<a href="#" id="playlist" class="glyphicon glyphicon-list" v-on:click="showMaster">
-						Gesti&oacute;n de listas
-					</a>
-				</li>
+<!--				<li v-bind:class="{ 'active': playlistView }">-->
+<!--					<a href="#" id="playlist" class="glyphicon glyphicon-list" v-on:click="showMaster">-->
+<!--						Gesti&oacute;n de listas-->
+<!--					</a>-->
+<!--				</li>-->
 			</ul>
 		</div>
 	</nav>
@@ -26,7 +26,7 @@
 <script>
 import Vue from 'vue'
 import ArchivosMaster from './ArchivosMaster.vue'
-import PlaylistMaster from './PlaylistMaster.vue'
+//import PlaylistMaster from './PlaylistMaster.vue'
 import {EventBus} from './EventBus.js'
 
 export default {
@@ -34,7 +34,7 @@ export default {
   data(){
     return {
 		archivoView: false,
-        playlistView: false
+        //playlistView: false
     }
   },
   methods: {
@@ -47,16 +47,16 @@ export default {
               el: '#master',
               render: h => h(ArchivosMaster)
             })
-            this.playlistView=false
+            //this.playlistView=false
           break
-		case "playlist":
+	/*	case "playlist":
             this.playlistView=true
             new Vue({
               el: '#master',
               render: h => h(PlaylistMaster)
             })
             this.archivoView = false
-          break
+          break*/
       }
     }
   }

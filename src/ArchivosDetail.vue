@@ -100,7 +100,7 @@ export default {
 			
 		}else{
 			this.archivo = {
-				Id: null,
+				Id: 0,
 				Titulo: "",
 				Tipo: "",
 				Formato: "",
@@ -121,7 +121,6 @@ export default {
 					EventBus.$emit('alertCreateSuccess')
 				})
 				.catch(function(){
-					alert("Error al crear el archivo")
 					EventBus.$emit('alertCreateError')
 				})
 			}else{
@@ -131,7 +130,6 @@ export default {
 					EventBus.$emit('alertUpdSuccess')
 				})
 				.catch( () => {
-					alert("Error al actualizar el archivo")
 					EventBus.$emit('alertUpdError')
 				})
 			}

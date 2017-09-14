@@ -3,11 +3,10 @@
 		<div class="col-md-12">
 
 			<form onsubmit="return false" v-if="active">
-				//TODO ajustar el formulario a la playlist
 				<div class="row">
 					<div class="col-md-12">
-						<h3 v-if="playlist.Id">Actualización de Archivo</h3>
-						<h3 v-else>Nuevo Archivo</h3>
+						<h3 v-if="playlist.Id">Actualizar Playlist</h3>
+						<h3 v-else>Nueva playlist</h3>
 					</div>
 				</div>
 
@@ -15,9 +14,9 @@
 					<div class="col-md-4">
 						<input type="hidden" id="id" v-model:value="playlist.Id"/>
 						<div class="input-group input-group-lg">
-							<span class="input-group-addon">T&iacute;tulo:</span>
-							<input type="text" class="form-control" id="titulo" required
-								   v-model:value="playlist.Titulo"/>
+							<span class="input-group-addon">Nombre:</span>
+							<input type="text" class="form-control" id="nombre" required
+								   v-model:value="playlist.Nombre"/>
 						</div>
 					</div>
 				</div>
@@ -25,23 +24,9 @@
 				<div class="row">
 					<div class="col-md-4">
 						<div class="input-group input-group-lg">
-							<span class="input-group-addon">Tipo de playlist:</span>
-							<select class="form-control" id="tipo" required
-									v-model:value="playlist.Tipo">
-								<option v-for="option in tiposArchivo" v-bind:value="option.value">
-									{{ option.text }}
-								</option>
-							</select>
-						</div>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-md-4">
-						<div class="input-group input-group-lg">
-							<span class="input-group-addon">Formato:</span>
-							<input type="text" class="form-control" id="formato" required
-								   v-model:value="playlist.Formato">
+							<span class="input-group-addon">NumElementos:</span>
+							<input type="text" class="form-control" id="numelementos" required
+								   v-model:value="playlist.NumElementos">
 						</div>
 					</div>
 				</div>
@@ -49,10 +34,10 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="input-group input-group-lg">
-						<span class="input-group-addon">Tama&ntilde;o:</span>
-						<input type="number" class="form-control" id="tamanio"
-							   v-model:value="playlist.TamanioMb">
-						<span class="input-group-addon">MB</span>
+						<span class="input-group-addon">Duraci&oacute;n:</span>
+						<input type="time" class="form-control" id="duracion"
+							   v-model:value="playlist.DuracionTotal">
+						<span class="input-group-addon">min</span>
 					</div>
 				</div>
 			</div>
@@ -60,10 +45,9 @@
 			<div class="row">
 				<div class="col-md-4">
 					<div class="input-group input-group-lg">
-						<span class="input-group-addon">Duraci&oacute;n:</span>
-						<input type="time" class="form-control" id="duracion"
-							   v-model:value="playlist.Duracion">
-						<span class="input-group-addon">min</span>
+						<span class="input-group-addon">P&uacute;blica:</span>
+						<input type="checkbox" class="form-control" id="tamanio"
+							   v-model:value="playlist.EsPublica">
 					</div>
 				</div>
 			</div>
@@ -95,15 +79,18 @@
 
 			}else{
 				this.playlist = {
-					// TODO Rellenar campos
+					Id: 0,
+					Nombre="",
+					NumElementos: 0,
+					DuracionTotal: "",
+					EsPublica: false
 				}
 			}
 		},
 		methods: {
 			aceptar: function(){
 				if(this.playlist.Id == null || this.playlist.Id == 0){
-
-					axios.post(SERVER + '/api/PlayList',this.playlist)// TODO llamar al rest
+					axios.post(SERVER + '/api/PlayList',this.playlist)
 						.then(
 							(playlist)=>{
 								this.playlist.Id = playlist.data.Id
@@ -111,17 +98,15 @@
 								EventBus.$emit('alertCreateSuccess')
 							})
 						.catch(function(){
-							alert("Error al crear el playlist")
 							EventBus.$emit('alertCreateError')
 						})
 				}else{
-					axios.put(SERVER + '/api/PlayList/'+this.playlist.Id,this.playlist)// TODO llamar al rest
+					axios.put(SERVER + '/api/PlayList/'+this.playlist.Id,this.playlist)
 						.then( ()=>{
 							this.cerrarDetalle()
 							EventBus.$emit('alertUpdSuccess')
 						})
 						.catch( () => {
-							alert("Error al actualizar el playlist")
 							EventBus.$emit('alertUpdError')
 						})
 				}
